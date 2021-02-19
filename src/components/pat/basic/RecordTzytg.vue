@@ -278,7 +278,7 @@ export default {
       let record_id = this.record_id;
       // 读取数据
       this.getRequest("/visit/record/" + record_id).then((resp) => {
-        if (resp) {
+        if (resp.tzytg) {
           // console.log("resp", resp);
           this.formTzytg.tzytg["体重(kg)"] = JSON.parse(resp.tzytg)["体重(kg)"];
           this.formTzytg.tzytg["体重变化(kg)"] = JSON.parse(resp.tzytg)[

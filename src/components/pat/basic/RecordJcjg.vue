@@ -697,7 +697,7 @@ export default {
       let record_id = this.record_id;
       // 读取数据
       this.getRequest("/visit/record/" + record_id).then((resp) => {
-        if (resp) {
+        if (resp.jcjg) {
           this.formJcjg.jcjg["空腹血糖(mmol/l)"] = JSON.parse(resp.jcjg)["空腹血糖(mmol/l)"];
           this.formJcjg.jcjg["HbA1c(%)"] = JSON.parse(resp.jcjg)["HbA1c(%)"];
           this.formJcjg.jcjg["血清肌酐(mmol/l)"] = JSON.parse(resp.jcjg)["血清肌酐(mmol/l)"];

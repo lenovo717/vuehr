@@ -2,13 +2,15 @@
   <div>
     <div>
       <el-input
-        placeholder="请输入患者身份证号"
+        placeholder="访视基线"
         prefix-icon="el-icon-search"
         style="width:300px;margin-right:10px;"
-        v-model="keyword"
+        v-model="base_name" :disabled="true"
       ></el-input>
+
       <el-button icon="el-icon-search" type="primary" @click="queryRecords">搜索</el-button>
       <el-button icon="el-icon-plus" type="primary" @click="addRecord">添加访视记录</el-button>
+      <el-button icon="el-icon-down" type="primary" @click="prev">返回</el-button>
     </div>
     <hr />
     <div style="margin-top:10px;">
@@ -69,14 +71,14 @@
         <el-tab-pane label="治疗药物A(心血管药物)" name="six" v-if="dialogVisible">
           <RecordZlywA v-bind:record_id="recordId"></RecordZlywA>
         </el-tab-pane>
-        <el-tab-pane label="治疗药物B(非心血管药物)" name="six" v-if="dialogVisible">
+        <el-tab-pane label="治疗药物B(非心血管药物)" name="seven" v-if="dialogVisible">
           <RecordZlywB v-bind:record_id="recordId"></RecordZlywB>
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
 
     <el-dialog title="新增随访" width="70%" :visible.sync="add_dialogVisible">
-      <RecordAdd v-bind:patient_id="patientId" @finishSave="getSave"></RecordAdd>
+      <RecordAdd v-bind:base_id="base_id" @finishSave="getSave"></RecordAdd>
     </el-dialog>
     
   </div>
@@ -101,8 +103,8 @@ export default {
       total:0,
       page:1,
       size:10,
-      keyword: "",
-      patientId: "",
+      base_id:"",
+      base_name:"",
       recordId: "",
       records: [],
       record: [],
@@ -132,13 +134,13 @@ export default {
       this.initRecords();
     },
     addRecord() {
-      // 检查患者编号是否存在
-      if (this.keyword) {
+      // 检查基线 是否存在
+      if (this.base_id) {
         // 不为空
         this.add_dialogVisible = true;
       } else {
         // 为空
-        this.$alert("患者编号不正确！", "提示", {
+        this.$alert("基线不能为空！", "提示", {
           confirmButtonText: "确定",
         //   callback: action => {
         //     this.$message({
@@ -175,17 +177,8 @@ export default {
         });
     },
     initRecords() {
-      this.patientId = this.keyword;
-      // this.getRequest("/visit/recordsByPatientId/" + this.keyword).then(
-      //   resp => {
-      //     if (resp) {
-      //       console.log("resp", resp);
-      //       this.records = resp;
-      //     }
-      //   }
-      // );
       this.loading = true
-      this.getRequest('/visit/recordsByPage/?page='+this.page+"&size="+this.size+'&keyword='+this.keyword).then(resp=>{
+      this.getRequest('/visit/recordsByBase/?page='+this.page+"&size="+this.size+'&base_id='+this.base_id).then(resp=>{
           if(resp){
               this.loading=false
               this.records = resp.data
@@ -228,14 +221,24 @@ export default {
       if(key){
         return this.sfxsDic[key];
       }
-    }
+    },
+    prev(){
+this.$router.go(-1)
+
+}
   
   },
   watch: {
     // keyword: function(newData, oldData) {
     //   console.log("keyword newData:", newData); //newData就是orderData
     // }
-  }
+  },
+  created: function () {
+    this.base_id = this.$route.query.base_id
+    this.base_name = this.$route.query.base_name
+    this.page = 1
+    this.initRecords()
+  },
 }
 </script>
 <style scoped>

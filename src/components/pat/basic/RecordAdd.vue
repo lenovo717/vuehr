@@ -2561,7 +2561,7 @@
 <script>
 export default {
   name: "RecordAdd",
-  props: ["patient_id"],
+  props: ["base_id"],
   data() {
     return {
       activeNames: "sqlllj",
@@ -2715,7 +2715,7 @@ export default {
             是否使用: "",
             已用: {
               药物名称: "",
-              药物剂量: "",
+              "药物剂量(mg/d)": "",
               是否达到目标剂量: "",
               未达目标剂量理由: "",
               是否增加剂量: "",
@@ -2737,7 +2737,7 @@ export default {
             是否使用: "",
             已用: {
               药物名称: "",
-              药物剂量: "",
+              "药物剂量(mg/d)": "",
               是否达到目标剂量: "",
               未达目标剂量理由: "",
               是否增加剂量: "",
@@ -2816,7 +2816,9 @@ export default {
               "药物剂量(mg/d)": "",
             },
           },
-          非二氢吡啶类钙拮抗剂: "",
+          非二氢吡啶类钙拮抗剂: {
+            是否使用: ""
+          },
           硝酸酯类药物: {
             是否使用: "",
             已用: {
@@ -2824,7 +2826,9 @@ export default {
               "药物剂量(mg/d)": "",
             },
           },
-          静脉正性肌力支持类型: "",
+          静脉正性肌力支持类型: {
+            是否使用: ""
+          },
         },
         zlyw_b: {
           非甾体类抗炎药: "",
@@ -3006,7 +3010,7 @@ export default {
     },
     resetForm() {},
     submitForm(formName) {
-      this.formAdd.patient_id = this.patient_id;
+      this.formAdd.base_id = this.base_id;
       // var formData = JSON.stringify(this.formAdd);
       this.$refs[formName].validate((valid) => {
         if (valid) {

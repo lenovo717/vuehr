@@ -2,7 +2,6 @@
   <div>
 
     <el-form
-    
       :model="baseForm"
       :rules="rules"
       ref="baseForm"
@@ -11,7 +10,7 @@
       <el-form-item label="基线名称" prop="base_name">
         <el-input v-model="baseForm.base_name"></el-input>
       </el-form-item>
-      <el-form-item label="项目" prop="project_id">
+      <!-- <el-form-item label="项目" prop="project_id">
         <el-select v-model="baseForm.project_id" placeholder="请选择基线建立区域">
           <el-option label="402室" value="shanghai"></el-option>
           <el-option label="403室" value="beijing"></el-option>
@@ -22,7 +21,7 @@
           <el-option label="402室" value="shanghai"></el-option>
           <el-option label="403室" value="beijing"></el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="基线时间" required>
         <el-col :span="5">
           <el-form-item prop="base_time">
